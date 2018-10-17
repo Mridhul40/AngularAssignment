@@ -14,6 +14,7 @@ import { AlertService } from './services/alert.service';
 import { UserService } from './services/user.service';
 import { NavbarComponent } from './navbar/navbar.component';
 import { TabComponent } from './tab/tab.component';
+import { DisplayArticleComponent } from './display-article/display-article.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { TabComponent } from './tab/tab.component';
     AlertComponent,
     HomeComponent,
     NavbarComponent,
-    TabComponent
+    TabComponent,
+    DisplayArticleComponent
    
   ],
   imports: [
