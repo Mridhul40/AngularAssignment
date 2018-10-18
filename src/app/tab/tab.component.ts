@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Article} from '../models/article.model';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { AuthenticationService } from '../services/authentication.service';
+import { UserService } from '../services/user.service';
 import {User} from '../models/user.model';
-import { map } from '../../../node_modules/rxjs/operators';
+import { map, first } from '../../../node_modules/rxjs/operators';
 import { Observable } from '../../../node_modules/rxjs';
 
 @Component({
@@ -15,22 +15,25 @@ export class TabComponent implements OnInit {
   articles :any;
   currentUser: User;
   articleSlug: string = "";
-  constructor(private http:HttpClient, private authService: AuthenticationService) { }
+  favArticles = [];
+  constructor(private http:HttpClient, private userService: UserService) { }
 
   ngOnInit() {
+
+    this.userService.getCurrentUser().subscribe(
+      (data:any) => {
+        this.currentUser = data.user;
+        this.getFavoriteArticles();
+     }
+    );
+
      this.getArticles().subscribe(
        (data:any)=>this.articles =(Object.values(data.articles)));
 
-       this.authService.currentUser.subscribe(
-         (userData: User) => {
-           this.currentUser = userData;
-           console.log(this.currentUser.username);
-        }
-       );
   }
 
   getArticles(){
-        return this.http.get("http://conduit.productionready.io/api/articles");
+        return this.http.get("http://conduit.productionready.io/api/articles?limit=10");
   }
 
   favouriteArticle(slug){
@@ -39,22 +42,12 @@ export class TabComponent implements OnInit {
         'Authorization' : `Token ${this.currentUser.token}`})
     };
     console.log(this.currentUser.token)
-    this.http.post<any>(`http://conduit.productionready.io/api/articles/${slug}/favorite`,JSON.stringify({}),headersConfig).subscribe(data => this.articleSlug = data.slug);
+    this.http.post<any>(`http://conduit.productionready.io/api/articles/${slug}/favorite`,JSON.stringify({}),headersConfig).subscribe((data:any) => {this.articles.forEach((item) => {if(item.slug === data.article.slug) item.favorited=true;})});
 
   }
 
-  getFavouriteClass(slug){
-  /*  let favArticles = [];
-    this.http.get(`http://conduit.productionready.io/api/articles?favorited=${this.currentUser.username}`).subscribe(data => (data.articles).forEach((art) => {favArticles.push(art.slug)}));
-
-    if(favArticles.indexOf(slug) !== -1){
-      return "btnSelected";
-    }
-    else{
-      return "btn";
-    }
-*/
-
+  getFavoriteArticles(){
+    this.http.get(`http://conduit.productionready.io/api/articles?favorited=${this.currentUser.username}`).subscribe((data:any) => console.log(data));
   }
 
 

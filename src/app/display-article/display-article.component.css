@@ -1,5 +1,5 @@
 .jumbotron
-{   
+{
     padding-top: 0px;
     padding-bottom:0px;
     background-size: cover;
@@ -10,4 +10,16 @@
                    /* so you can see your image */
     max-width:1400px;  /* define the max width */
     text-align: center;
+ }
+
+ .favorite{
+   background-color: grey;
+ }
+
+ .favorite:hover{
+   background-color: RoyalBlue;
+ }
+
+ .btnfavorited{
+   background-color: Blue !important;
  }

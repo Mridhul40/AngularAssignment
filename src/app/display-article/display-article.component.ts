@@ -46,7 +46,7 @@ export class DisplayArticleComponent implements OnInit {
       (data:any)=>{
         this.currentUser =data.user ;
       });
-   
+
     this.check();
 
     this.getArticle(this.slug).subscribe(data => this.article = data.article);
@@ -58,7 +58,7 @@ export class DisplayArticleComponent implements OnInit {
    }
 
    canModifyComment(comAuthor:string):boolean{
-    
+
       if(this.currentUser.username=== comAuthor){
         return true;
       }
@@ -82,6 +82,16 @@ export class DisplayArticleComponent implements OnInit {
     this.isAuthenticated = false;
   }
 
+  favouriteArticle(slug){
+    console.log(this.article);
+    const headersConfig = {
+      headers: new HttpHeaders({
+        'Authorization' : `Token ${this.currentUser.token}`})
+    };
+
+    this.http.post<any>(`http://conduit.productionready.io/api/articles/${slug}/favorite`,JSON.stringify({}),headersConfig).subscribe((data:any) => {this.article.favorited=true;});
+
+  }
 
 getArticle(slug): Observable<any> {
   return this.http.get(`http://conduit.productionready.io/api/articles/${this.slug}`);
