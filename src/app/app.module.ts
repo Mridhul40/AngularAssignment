@@ -15,6 +15,7 @@ import { UserService } from './services/user.service';
 import { NavbarComponent } from './navbar/navbar.component';
 import { TabComponent } from './tab/tab.component';
 import { DisplayArticleComponent } from './display-article/display-article.component';
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { DisplayArticleComponent } from './display-article/display-article.compo
     HomeComponent,
     NavbarComponent,
     TabComponent,
-    DisplayArticleComponent
+    DisplayArticleComponent,
+    SettingsComponent
    
   ],
   imports: [

@@ -19,7 +19,5 @@ export class ArticleService {
 
   constructor(private http: HttpClient) { }
 
-  addComment(payload , slug):Observable<Comment>{
-    return this.http.post<any>(`http://conduit.productionready.io/api/articles/${slug}/comments`,{ comment: { body: payload }},httpOptions).pipe(map(data => data.comment));
-  }
+  
 }
