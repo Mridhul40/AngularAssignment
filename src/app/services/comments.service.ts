@@ -24,6 +24,12 @@ export class CommentsService {
 
   getAllComments(slug){
     return this.http.get(`http://conduit.productionready.io/api/articles/${slug}/comments`);
-  
+  }
+
+  deleteComment(slug , id){
+    console.log("here");
+    console.log(slug);
+    console.log(id);
+    return this.http.delete(`http://conduit.productionready.io/api/articles/${slug}/comments/${id}`,httpOptions);
   }
 }

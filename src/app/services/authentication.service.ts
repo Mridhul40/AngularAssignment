@@ -35,11 +35,11 @@ export class AuthenticationService {
   }
 
   update(user): Observable<User> {
-    console.log(this.currentUserSubject.value.user.token);
+    
     const headersConfig = {
       headers: new HttpHeaders({  'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization' : `Token ${this.currentUserSubject.value.user.token}`})
+        'Authorization' : "Token "+localStorage.jwtToken })
     };
 
     return this.http.put(
