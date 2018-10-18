@@ -1,20 +1,36 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http' ;
 import { Article } from '../models/article.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import { first } from 'rxjs/operators';
+import { HttpHeaders } from '@angular/common/http';
+import { CommentsService} from '../services/comments.service';
+import { AuthenticationService } from '../services/authentication.service';
+import {User} from '../models/user.model';
+import { userInfo } from 'os';
+
+
 @Component({
   selector: 'app-display-article',
   templateUrl: './display-article.component.html',
   styleUrls: ['./display-article.component.css']
 })
 export class DisplayArticleComponent implements OnInit {
+  
  slug:string;
  article:Article ;
  isAuthenticated :Boolean;
+ currentUser: User;
+ comments: Array<Comment>;
+ 
+ canModifyArticle:boolean;
+
   constructor(private http:HttpClient,
-    private activatedRoute:ActivatedRoute) {
+    private router:Router,
+    private activatedRoute:ActivatedRoute,
+    private commentsService:CommentsService,
+    private authenticationService :AuthenticationService) {
       this.activatedRoute.params.subscribe(params => {
         this.slug  = params['slug']; 
      
@@ -22,16 +38,43 @@ export class DisplayArticleComponent implements OnInit {
   }
   
   ngOnInit() {
+    this.authenticationService.currentUser.subscribe(
+      (userData: User) => {
+        this.currentUser = userData;
+        console.log(this.currentUser.username);
+     }
+    );
     this.check();
  
-    this.getArticle(this.slug).subscribe(json => this.article = json.article);
-  
+    this.getArticle(this.slug).subscribe(data => this.article = data.article);
 
+    this.populate(this.slug);
+
+   
+  
+   }
+
+   canModifyComment(comAuthor:string):boolean{
+     if(this.currentUser.username=== comAuthor){
+return true;
+     }
+   
+  
+     else{
+       console.log("false");
+     return false;}
+   }
+
+   populate(slug){
+   this.commentsService.getAllComments(slug).subscribe(
+    (data :any ) => {this.comments = data.comments,console.log(this.comments)});
+   
    }
 
   check(){
     if( window.localStorage['jwtToken']){
       this.isAuthenticated =true ;
+
     }
     else
     this.isAuthenticated = false;
@@ -43,5 +86,12 @@ getArticle(slug): Observable<any> {
     
     
 }
-
-}
+postComment(comment:string){
+this.commentsService.addComment(comment,this.slug)
+            .pipe(first())
+            .subscribe(
+                data => {
+                    this.router.navigate(['/']);
+                });
+    }
+  }
