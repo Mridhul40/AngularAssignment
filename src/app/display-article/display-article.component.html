@@ -24,16 +24,14 @@
         <div class="card-footer"><button (click) ="postComment(comment.value)" class="btn btn-sm btn-primary" type="submit"> Post Comment </button></div>
         <br>
         <br>
-        <div *ngFor="let comment of comments" class="card">
+        <div *ngFor="let comment of comments" class="card" style="margin:10px">
         <div class="card-header"> {{comment.body}} </div>
-        <div class="card-footer"><p #comAuthor>{{comment.author.username}}</p>
-          <div *ngIf="canModifyComment(comAuthor.value)">
+        <div class="card-footer">{{comment.author.username}}
+          <div *ngIf="canModifyComment(comment.author.username)">
           <button class="fa fa-trash"style="float:right"></button>
         </div>
-        </div>
+      </div>
        </div>
-       <br>
-       <br>
       </div>
     </div>
     

@@ -10,6 +10,7 @@ import { AuthenticationService } from '../services/authentication.service';
 import {User} from '../models/user.model';
 
 
+
 @Component({
   selector: 'app-display-article',
   templateUrl: './display-article.component.html',
@@ -54,11 +55,10 @@ export class DisplayArticleComponent implements OnInit {
    }
 
    canModifyComment(comAuthor:string):boolean{
-     if(this.currentUser.username=== comAuthor){
+     console.log(comAuthor);
+     if(this.currentUser.username === comAuthor){
 return true;
      }
-
-
      else{
        console.log("false");
      return false;}
