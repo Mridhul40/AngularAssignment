@@ -8,7 +8,6 @@ import { HttpHeaders } from '@angular/common/http';
 import { CommentsService} from '../services/comments.service';
 import { AuthenticationService } from '../services/authentication.service';
 import {User} from '../models/user.model';
-import { userInfo } from 'os';
 
 
 @Component({
@@ -17,13 +16,13 @@ import { userInfo } from 'os';
   styleUrls: ['./display-article.component.css']
 })
 export class DisplayArticleComponent implements OnInit {
-  
+
  slug:string;
  article:Article ;
  isAuthenticated :Boolean;
  currentUser: User;
  comments: Array<Comment>;
- 
+
  canModifyArticle:boolean;
 
   constructor(private http:HttpClient,
@@ -32,11 +31,11 @@ export class DisplayArticleComponent implements OnInit {
     private commentsService:CommentsService,
     private authenticationService :AuthenticationService) {
       this.activatedRoute.params.subscribe(params => {
-        this.slug  = params['slug']; 
-     
+        this.slug  = params['slug'];
+
     });
   }
-  
+
   ngOnInit() {
     this.authenticationService.currentUser.subscribe(
       (userData: User) => {
@@ -45,21 +44,21 @@ export class DisplayArticleComponent implements OnInit {
      }
     );
     this.check();
- 
+
     this.getArticle(this.slug).subscribe(data => this.article = data.article);
 
     this.populate(this.slug);
 
-   
-  
+
+
    }
 
    canModifyComment(comAuthor:string):boolean{
      if(this.currentUser.username=== comAuthor){
 return true;
      }
-   
-  
+
+
      else{
        console.log("false");
      return false;}
@@ -68,7 +67,7 @@ return true;
    populate(slug){
    this.commentsService.getAllComments(slug).subscribe(
     (data :any ) => {this.comments = data.comments,console.log(this.comments)});
-   
+
    }
 
   check(){
@@ -83,8 +82,8 @@ return true;
 
 getArticle(slug): Observable<any> {
   return this.http.get(`http://conduit.productionready.io/api/articles/${this.slug}`);
-    
-    
+
+
 }
 postComment(comment:string){
 this.commentsService.addComment(comment,this.slug)
