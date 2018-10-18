@@ -8,9 +8,9 @@
       <li class="nav-item">
         <a class="nav-link" data-toggle="tab" href="#menu1">Global Feed</a>
       </li>
-     
+
     </ul>
-  
+
     <!-- Tab panes -->
     <div class="tab-content">
       <div id="home" class="container tab-pane active"><br>
@@ -27,7 +27,7 @@
               <h4 class="card-title">{{item.title}}</h4>
             </div>
             <div class="col-md-6">
-              <button style="float:right" class="btn" ><i class="fa fa-heart"></i></button>
+              <button style="float:right" class="btn" (click)="favouriteArticle(item.slug)" [ngClass]="getFavouriteClass()" ><i class="fa fa-heart"></i></button>
             </div>
             </div>
             <h6 class="card-text">Author: {{item.author.username}}</h6>
