@@ -36,14 +36,17 @@ export class TabComponent implements OnInit {
         return this.http.get("http://conduit.productionready.io/api/articles?limit=10");
   }
 
-  favouriteArticle(slug){
+  favouriteArticle(slug, favorited){
     const headersConfig = {
       headers: new HttpHeaders({
         'Authorization' : `Token ${this.currentUser.token}`})
     };
-    console.log(this.currentUser.token)
+    if(favorited == false){
     this.http.post<any>(`http://conduit.productionready.io/api/articles/${slug}/favorite`,JSON.stringify({}),headersConfig).subscribe((data:any) => {this.articles.forEach((item) => {if(item.slug === data.article.slug) item.favorited=true;})});
-
+  }
+  else if(favorited == true){
+    this.http.delete(`http://conduit.productionready.io/api/articles/${slug}/favorite`,headersConfig).subscribe((data:any) => {this.articles.forEach((item) => {if(item.slug === data.article.slug) item.favorited=false;})});
+  }
   }
 
   getFavoriteArticles(){
