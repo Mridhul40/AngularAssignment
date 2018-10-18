@@ -8,6 +8,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { CommentsService} from '../services/comments.service';
 import { AuthenticationService } from '../services/authentication.service';
 import {User} from '../models/user.model';
+import {UserService} from '../services/user.service';
 
 
 
@@ -30,7 +31,8 @@ export class DisplayArticleComponent implements OnInit {
     private router:Router,
     private activatedRoute:ActivatedRoute,
     private commentsService:CommentsService,
-    private authenticationService :AuthenticationService) {
+    private authenticationService :AuthenticationService,
+    private userService: UserService) {
       this.activatedRoute.params.subscribe(params => {
         this.slug  = params['slug']; 
      
@@ -38,12 +40,13 @@ export class DisplayArticleComponent implements OnInit {
   }
   
   ngOnInit() {
-    this.authenticationService.currentUser.subscribe(
-      (userData: User) => {
-        this.currentUser = userData;
-        console.log(this.currentUser.username);
-     }
-    );
+    this.userService.getCurrentUser()
+    .pipe(first())
+    .subscribe(
+      (data:any)=>{
+        this.currentUser =data.user ;
+      });
+   
     this.check();
  
     this.getArticle(this.slug).subscribe(data => this.article = data.article);
@@ -55,13 +58,13 @@ export class DisplayArticleComponent implements OnInit {
    }
 
    canModifyComment(comAuthor:string):boolean{
-     console.log(comAuthor);
-     if(this.currentUser.username === comAuthor){
-return true;
-     }
-     else{
-       console.log("false");
-     return false;}
+    
+      if(this.currentUser.username=== comAuthor){
+        return true;
+      }
+      else{
+        return false;
+      }
    }
 
    populate(slug){
@@ -90,7 +93,14 @@ this.commentsService.addComment(comment,this.slug)
             .pipe(first())
             .subscribe(
                 data => {
-                    this.router.navigate(['/']);
+                   window.location.reload();
                 });
+    }
+
+
+    deleteComment(id){
+      this.commentsService.deleteComment(this.slug,id).subscribe (data => {
+        window.location.reload();
+     });
     }
   }
