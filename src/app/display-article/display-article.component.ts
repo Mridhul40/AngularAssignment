@@ -8,7 +8,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { CommentsService} from '../services/comments.service';
 import { AuthenticationService } from '../services/authentication.service';
 import {User} from '../models/user.model';
-import { userInfo } from 'os';
+
 
 
 @Component({
@@ -55,11 +55,10 @@ export class DisplayArticleComponent implements OnInit {
    }
 
    canModifyComment(comAuthor:string):boolean{
-     if(this.currentUser.username=== comAuthor){
+     console.log(comAuthor);
+     if(this.currentUser.username === comAuthor){
 return true;
      }
-   
-  
      else{
        console.log("false");
      return false;}

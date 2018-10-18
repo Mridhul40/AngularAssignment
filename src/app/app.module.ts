@@ -16,6 +16,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { TabComponent } from './tab/tab.component';
 import { DisplayArticleComponent } from './display-article/display-article.component';
 import { SettingsComponent } from './settings/settings.component';
+import { NewArticleComponent } from './new-article/new-article.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { SettingsComponent } from './settings/settings.component';
     NavbarComponent,
     TabComponent,
     DisplayArticleComponent,
-    SettingsComponent
+    SettingsComponent,
+    NewArticleComponent
    
   ],
   imports: [
