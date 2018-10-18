@@ -113,4 +113,23 @@ this.commentsService.addComment(comment,this.slug)
         window.location.reload();
      });
     }
+
+    followUser(username){
+      const headersConfig = {
+        headers: new HttpHeaders({
+          'Authorization' : `Token ${this.currentUser.token}`})
+      };
+
+      this.http.post<any>(`http://conduit.productionready.io/api/profiles/${username}/follow`,JSON.stringify({}),headersConfig).subscribe((data:any) => {this.article.author.following = true;});
+
+    }
+
+    unfollowUser(username){
+      const headersConfig = {
+        headers: new HttpHeaders({
+          'Authorization' : `Token ${this.currentUser.token}`})
+      };
+
+      this.http.delete(`http://conduit.productionready.io/api/profiles/${username}/follow`,headersConfig).subscribe((data:any) => {this.article.author.following = false;});
+    }
   }
