@@ -18,13 +18,13 @@ import {UserService} from '../services/user.service';
   styleUrls: ['./display-article.component.css']
 })
 export class DisplayArticleComponent implements OnInit {
-  
+
  slug:string;
  article:Article ;
  isAuthenticated :Boolean;
  currentUser: User;
  comments: Array<Comment>;
- 
+
  canModifyArticle:boolean;
 
   constructor(private http:HttpClient,
@@ -34,11 +34,11 @@ export class DisplayArticleComponent implements OnInit {
     private authenticationService :AuthenticationService,
     private userService: UserService) {
       this.activatedRoute.params.subscribe(params => {
-        this.slug  = params['slug']; 
-     
+        this.slug  = params['slug'];
+
     });
   }
-  
+
   ngOnInit() {
     this.userService.getCurrentUser()
     .pipe(first())
@@ -48,13 +48,13 @@ export class DisplayArticleComponent implements OnInit {
       });
    
     this.check();
- 
+
     this.getArticle(this.slug).subscribe(data => this.article = data.article);
 
     this.populate(this.slug);
 
-   
-  
+
+
    }
 
    canModifyComment(comAuthor:string):boolean{
@@ -70,7 +70,7 @@ export class DisplayArticleComponent implements OnInit {
    populate(slug){
    this.commentsService.getAllComments(slug).subscribe(
     (data :any ) => {this.comments = data.comments,console.log(this.comments)});
-   
+
    }
 
   check(){
@@ -85,8 +85,8 @@ export class DisplayArticleComponent implements OnInit {
 
 getArticle(slug): Observable<any> {
   return this.http.get(`http://conduit.productionready.io/api/articles/${this.slug}`);
-    
-    
+
+
 }
 postComment(comment:string){
 this.commentsService.addComment(comment,this.slug)
