@@ -15,10 +15,11 @@
         </div>
         </div>
         <div class="card-body" *ngIf="canModifyArticle(article.author.username)==false">
-           <button type="button"  icon ="fa fa-plus" class="btn btn-primary" btn-sm><i class="fa fa-plus">Follow {{article?.author.username}}</i></button>
-           &nbsp;
-
-          <button type="button" icon="fa-fa-heart" class="btn btn-primary" btn-sm> <i class="fa fa-heart"> Favourite</i></button>
+          <div *ngIf="article?.author.following; then followBtn else unfollowBtn"></div>
+          <ng-template #followBtn><button type="button"  class="btn btn-primary btn-sm" style="background-color:grey;" (click)="unfollowUser(article?.author.username)">UnFollow {{article?.author.username}}</button></ng-template>
+          <ng-template #unfollowBtn> <button type="button"  class="btn btn-primary btn-sm" style="background-color:RoyalBlue;" (click)="followUser(article?.author.username)"> Follow {{article?.author.username}}</button></ng-template>
+          &nbsp;
+          <button type="button" icon="fa fa-heart-o" class="btn btn-primary favorite btn-sm" [ngClass]="{'btnfavorited':article?.favorited}" (click)="favouriteArticle(article?.slug)"> <i class="fa fa-heart-o">Favourite</i></button>
         </div>
       </div>
     <br>
@@ -43,4 +44,3 @@
        </div>
       </div>
     </div>
-    

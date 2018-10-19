@@ -1,10 +1,14 @@
 .btn {
-    background-color: DodgerBlue; /* Blue background */
+    background-color: grey; /* Blue background */
     border: none; /* Remove borders */
     color: white; /* White text */
     padding: 10px 14px; /* Some padding */
     font-size: 12px; /* Set a font size */
     cursor: pointer; /* Mouse pointer on hover */
+}
+
+.btnSelected {
+  background-color: Blue !important; 
 }
 
 /* Darker background on mouse-over */
