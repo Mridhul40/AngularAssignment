@@ -9,6 +9,7 @@ import { CommentsService} from '../services/comments.service';
 import { AuthenticationService } from '../services/authentication.service';
 import {User} from '../models/user.model';
 import {UserService} from '../services/user.service';
+import {ArticleService} from '../services/article.service';
 
 
 
@@ -32,6 +33,7 @@ export class DisplayArticleComponent implements OnInit {
     private activatedRoute:ActivatedRoute,
     private commentsService:CommentsService,
     private authenticationService :AuthenticationService,
+    private articleService:ArticleService,
     private userService: UserService) {
       this.activatedRoute.params.subscribe(params => {
         this.slug  = params['slug'];
@@ -46,7 +48,7 @@ export class DisplayArticleComponent implements OnInit {
       (data:any)=>{
         this.currentUser =data.user ;
       });
-
+   
     this.check();
 
     this.getArticle(this.slug).subscribe(data => this.article = data.article);
@@ -58,7 +60,7 @@ export class DisplayArticleComponent implements OnInit {
    }
 
    canModifyComment(comAuthor:string):boolean{
-
+    
       if(this.currentUser.username=== comAuthor){
         return true;
       }
@@ -90,16 +92,6 @@ export class DisplayArticleComponent implements OnInit {
     this.isAuthenticated = false;
   }
 
-  favouriteArticle(slug){
-    console.log(this.article);
-    const headersConfig = {
-      headers: new HttpHeaders({
-        'Authorization' : `Token ${this.currentUser.token}`})
-    };
-
-    this.http.post<any>(`http://conduit.productionready.io/api/articles/${slug}/favorite`,JSON.stringify({}),headersConfig).subscribe((data:any) => {this.article.favorited=true;});
-
-  }
 
 getArticle(slug): Observable<any> {
   return this.http.get(`http://conduit.productionready.io/api/articles/${this.slug}`);
@@ -122,6 +114,17 @@ this.commentsService.addComment(comment,this.slug)
      });
     }
 
+    favouriteArticle(slug){
+      console.log(this.article);
+      const headersConfig = {
+        headers: new HttpHeaders({
+          'Authorization' : `Token ${this.currentUser.token}`})
+      };
+  
+      this.http.post<any>(`http://conduit.productionready.io/api/articles/${slug}/favorite`,JSON.stringify({}),headersConfig).subscribe((data:any) => {this.article.favorited=true;});
+  
+    }
+
     followUser(username){
       const headersConfig = {
         headers: new HttpHeaders({
@@ -139,5 +142,11 @@ this.commentsService.addComment(comment,this.slug)
       };
 
       this.http.delete(`http://conduit.productionready.io/api/profiles/${username}/follow`,headersConfig).subscribe((data:any) => {this.article.author.following = false;});
+    }
+
+    deleteArticle(){
+      this.articleService.deleteArticle(this.slug).subscribe (data => {
+       window.location.href="/";
+     });
     }
   }

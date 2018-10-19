@@ -30,4 +30,8 @@ export class ArticleService {
     },httpOptions
 );
   }
+
+  deleteArticle(slug){
+       return this.http.delete(`http://conduit.productionready.io/api/articles/${slug}`,httpOptions);
+  }
 }

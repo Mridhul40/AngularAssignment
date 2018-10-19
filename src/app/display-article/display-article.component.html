@@ -6,7 +6,7 @@
     <div class="card bg-secondary text-white">
         <div class="card-header"><h1>{{article?.title}}</h1>
         <div *ngIf="canModifyArticle(article.author.username)">
-        <button type = "button" style="margin:5px"  class="btn btn-primary" btn-sm>
+        <button type = "button" style="margin:5px" (click)="deleteArticle()" class="btn btn-primary" btn-sm>
             <i class="fa fa-trash"> Delete Article</i>
         </button>
         <button type = "button" icon="fa fa-trash" class="btn btn-primary" btn-sm>
