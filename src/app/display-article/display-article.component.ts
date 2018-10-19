@@ -25,7 +25,7 @@ export class DisplayArticleComponent implements OnInit {
  currentUser: User;
  comments: Array<Comment>;
 
- canModifyArticle:boolean;
+
 
   constructor(private http:HttpClient,
     private router:Router,
@@ -67,6 +67,14 @@ export class DisplayArticleComponent implements OnInit {
       }
    }
 
+   canModifyArticle(author):boolean{
+        if(this.currentUser.username === author){
+          return true ;
+        }
+        else{
+          return false ; 
+        }
+   }
    populate(slug){
    this.commentsService.getAllComments(slug).subscribe(
     (data :any ) => {this.comments = data.comments,console.log(this.comments)});

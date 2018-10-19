@@ -4,9 +4,18 @@
 <br>
 <div class="article-page">
     <div class="card bg-secondary text-white">
-        <div class="card-header"><h1>{{article?.title}}</h1></div>
-        <div class="card-body">
-           <button type="button"  class="btn btn-primary" btn-sm> + Follow {{article?.author.username}}</button>
+        <div class="card-header"><h1>{{article?.title}}</h1>
+        <div *ngIf="canModifyArticle(article.author.username)">
+        <button type = "button" style="margin:5px"  class="btn btn-primary" btn-sm>
+            <i class="fa fa-trash"> Delete Article</i>
+        </button>
+        <button type = "button" icon="fa fa-trash" class="btn btn-primary" btn-sm>
+            <i class="fa fa-pencil-square-o"> Edit Article</i>
+        </button>
+        </div>
+        </div>
+        <div class="card-body" *ngIf="canModifyArticle(article.author.username)==false">
+           <button type="button"  icon ="fa fa-plus" class="btn btn-primary" btn-sm><i class="fa fa-plus">Follow {{article?.author.username}}</i></button>
            &nbsp;
 
           <button type="button" icon="fa-fa-heart" class="btn btn-primary" btn-sm> <i class="fa fa-heart"> Favourite</i></button>

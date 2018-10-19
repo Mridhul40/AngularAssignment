@@ -19,5 +19,15 @@ export class ArticleService {
 
   constructor(private http: HttpClient) { }
 
-  
+  addArticle(title , description , content , tag){
+    return this.http.post('http://conduit.productionready.io/api/articles',
+    {"article":
+       {"title":title,
+         "description":description,
+         "body": content,
+         "tagList":tag
+       }
+    },httpOptions
+);
+  }
 }
