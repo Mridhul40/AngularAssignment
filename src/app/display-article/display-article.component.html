@@ -9,9 +9,11 @@
         <button type = "button" style="margin:5px" (click)="deleteArticle()" class="btn btn-primary" btn-sm>
             <i class="fa fa-trash"> Delete Article</i>
         </button>
-        <button type = "button" icon="fa fa-trash" class="btn btn-primary" btn-sm>
-            <i class="fa fa-pencil-square-o"> Edit Article</i>
+        <button (click)="edit()" type = "button" icon="fa fa-trash" class="btn btn-primary" btn-sm> 
+          <i class="fa fa-pencil-square-o" > 
+              Edit Article</i>
         </button>
+      
         </div>
         </div>
         <div class="card-body" *ngIf="canModifyArticle(article.author.username)==false">

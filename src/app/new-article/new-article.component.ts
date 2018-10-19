@@ -28,7 +28,7 @@ export class NewArticleComponent implements OnInit {
   }
 
   get f() {
-    console.log('mein chal raha hu');
+
     return this.articleForm.controls; }
 
   onSubmit() {

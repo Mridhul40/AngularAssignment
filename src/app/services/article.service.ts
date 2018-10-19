@@ -31,7 +31,23 @@ export class ArticleService {
 );
   }
 
+  editArticle(title , description , content , slug){
+    return this.http.put(`http://conduit.productionready.io/api/articles/${slug}`,
+    {"article":
+       {"title":title,
+         "description":description,
+         "body": content,
+         
+       }
+    },httpOptions
+);
+  }
+
   deleteArticle(slug){
        return this.http.delete(`http://conduit.productionready.io/api/articles/${slug}`,httpOptions);
+  }
+
+  getArticle(slug): Observable<any> {
+    return this.http.get(`http://conduit.productionready.io/api/articles/${slug}`);
   }
 }

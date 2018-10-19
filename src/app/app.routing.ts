@@ -6,6 +6,7 @@ import {AuthGuard}  from './auth.guard';
 import { DisplayArticleComponent } from './display-article/display-article.component';
 import { SettingsComponent } from './settings/settings.component';
 import {NewArticleComponent} from './new-article/new-article.component';
+import { EditArticleComponent } from './edit-article/edit-article.component';
 
 const appRoutes: Routes = [
    {path:'',component: HomeComponent ,canActivate: [AuthGuard]},
@@ -14,6 +15,7 @@ const appRoutes: Routes = [
     { path: 'register', component: RegisterComponent },
     { path: 'settings', component: SettingsComponent },
     { path: 'new', component: NewArticleComponent },
+    {path:'editArticle/:slug' , component :EditArticleComponent},
 
     // otherwise redirect to home
     { path: '**', redirectTo: '' }

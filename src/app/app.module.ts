@@ -17,6 +17,7 @@ import { TabComponent } from './tab/tab.component';
 import { DisplayArticleComponent } from './display-article/display-article.component';
 import { SettingsComponent } from './settings/settings.component';
 import { NewArticleComponent } from './new-article/new-article.component';
+import { EditArticleComponent } from './edit-article/edit-article.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { NewArticleComponent } from './new-article/new-article.component';
     TabComponent,
     DisplayArticleComponent,
     SettingsComponent,
-    NewArticleComponent
+    NewArticleComponent,
+    EditArticleComponent
    
   ],
   imports: [

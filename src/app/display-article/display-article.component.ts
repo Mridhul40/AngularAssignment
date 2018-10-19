@@ -149,4 +149,8 @@ this.commentsService.addComment(comment,this.slug)
        window.location.href="/";
      });
     }
+
+    edit(){
+      window.location.href=`/editArticle/${this.slug}`;
+    }
   }
