@@ -8,10 +8,10 @@
 }
 
 .btnSelected {
-  background-color: Blue !important; 
+  background-color: #FF8C00 !important;
 }
 
 /* Darker background on mouse-over */
 .btn:hover {
-    background-color: RoyalBlue;
+    background-color: #ffe4b2;
 }

@@ -1,25 +1,24 @@
-.jumbotron
-{
-    padding-top: 0px;
-    padding-bottom:0px;
-    background-size: cover;
-    background: contain;
-    width: 100%; /* make sure to define width to fill container */
-    height: 100px; /* define the height in pixels or make sure   */
-                   /* you have something in your div with height */
-                   /* so you can see your image */
-    max-width:1400px;  /* define the max width */
-    text-align: center;
- }
 
  .favorite{
    background-color: grey;
  }
 
+ .title-pane{
+   background-color: #75A1D0;
+ }
+
  .favorite:hover{
-   background-color: RoyalBlue;
+   background-color: #3299CC;
  }
 
  .btnfavorited{
-   background-color: Blue !important;
+   background-color: #236B8E !important;
  }
+
+ .postBtn{
+   background-color: #236B8E;
+ }
+
+.art-body{
+  background-color: #9BC4E2;
+}
