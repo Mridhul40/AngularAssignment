@@ -6,6 +6,14 @@ import {User} from '../models/user.model';
 import { map, first } from '../../../node_modules/rxjs/operators';
 import { Observable } from '../../../node_modules/rxjs';
 
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type':  'application/json',
+    'Authorization': "Token "+localStorage.jwtToken
+
+  })
+};
+
 @Component({
   selector: 'app-tab',
   templateUrl: './tab.component.html',
@@ -13,6 +21,7 @@ import { Observable } from '../../../node_modules/rxjs';
 })
 export class TabComponent implements OnInit {
   articles :any;
+  feedArticles: any;
   currentUser: User;
   articleSlug: string = "";
   favArticles = [];
@@ -30,10 +39,17 @@ export class TabComponent implements OnInit {
      this.getArticles().subscribe(
        (data:any)=>this.articles =(Object.values(data.articles)));
 
+     this.getFeedArticles().subscribe(
+       (data:any)=> this.feedArticles = (Object.values(data.articles)));
   }
 
   getArticles(){
-        return this.http.get("http://conduit.productionready.io/api/articles?limit=10");
+        return this.http.get("http://conduit.productionready.io/api/articles");
+  }
+
+  getFeedArticles(){
+
+        return this.http.get("http://conduit.productionready.io/api/articles/feed", httpOptions);
   }
 
   favouriteArticle(slug, favorited){
@@ -46,6 +62,19 @@ export class TabComponent implements OnInit {
   }
   else if(favorited == true){
     this.http.delete(`http://conduit.productionready.io/api/articles/${slug}/favorite`,headersConfig).subscribe((data:any) => {this.articles.forEach((item) => {if(item.slug === data.article.slug) item.favorited=false;})});
+  }
+  }
+
+  favouriteFeedArticle(slug, favorited){
+    const headersConfig = {
+      headers: new HttpHeaders({
+        'Authorization' : `Token ${this.currentUser.token}`})
+    };
+    if(favorited == false){
+    this.http.post<any>(`http://conduit.productionready.io/api/articles/${slug}/favorite`,JSON.stringify({}),headersConfig).subscribe((data:any) => {this.feedArticles.forEach((item) => {if(item.slug === data.article.slug) item.favorited=true;})});
+  }
+  else if(favorited == true){
+    this.http.delete(`http://conduit.productionready.io/api/articles/${slug}/favorite`,headersConfig).subscribe((data:any) => {this.feedArticles.forEach((item) => {if(item.slug === data.article.slug) item.favorited=false;})});
   }
   }
 

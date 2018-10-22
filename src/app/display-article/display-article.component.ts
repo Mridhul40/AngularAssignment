@@ -48,7 +48,7 @@ export class DisplayArticleComponent implements OnInit {
       (data:any)=>{
         this.currentUser =data.user ;
       });
-   
+
     this.check();
 
     this.getArticle(this.slug).subscribe(data => this.article = data.article);
@@ -60,7 +60,7 @@ export class DisplayArticleComponent implements OnInit {
    }
 
    canModifyComment(comAuthor:string):boolean{
-    
+
       if(this.currentUser.username=== comAuthor){
         return true;
       }
@@ -74,7 +74,7 @@ export class DisplayArticleComponent implements OnInit {
           return true ;
         }
         else{
-          return false ; 
+          return false ;
         }
    }
    populate(slug){
@@ -114,15 +114,19 @@ this.commentsService.addComment(comment,this.slug)
      });
     }
 
-    favouriteArticle(slug){
+    favouriteArticle(slug, favorited){
       console.log(this.article);
       const headersConfig = {
         headers: new HttpHeaders({
           'Authorization' : `Token ${this.currentUser.token}`})
       };
-  
+
+      if(favorited == false){
       this.http.post<any>(`http://conduit.productionready.io/api/articles/${slug}/favorite`,JSON.stringify({}),headersConfig).subscribe((data:any) => {this.article.favorited=true;});
-  
+    }
+    else if(favorited == true){
+      this.http.delete(`http://conduit.productionready.io/api/articles/${slug}/favorite`, headersConfig).subscribe((data:any) => {this.article.favorited=false;});
+    }
     }
 
     followUser(username){

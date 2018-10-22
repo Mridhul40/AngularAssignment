@@ -17,7 +17,7 @@ currentUser:User;
     .pipe(first())
     .subscribe(
       (data:any)=>{
-        this.currentUser =data.user ;
+        this.currentUser = data.user ;
       });
   }
 

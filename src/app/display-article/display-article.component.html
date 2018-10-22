@@ -9,11 +9,11 @@
         <button type = "button" style="margin:5px" (click)="deleteArticle()" class="btn btn-primary" btn-sm>
             <i class="fa fa-trash"> Delete Article</i>
         </button>
-        <button (click)="edit()" type = "button" icon="fa fa-trash" class="btn btn-primary" btn-sm> 
-          <i class="fa fa-pencil-square-o" > 
+        <button (click)="edit()" type = "button" icon="fa fa-trash" class="btn btn-primary" btn-sm>
+          <i class="fa fa-pencil-square-o" >
               Edit Article</i>
         </button>
-      
+
         </div>
         </div>
         <div class="card-body" *ngIf="canModifyArticle(article.author.username)==false">
@@ -21,7 +21,7 @@
           <ng-template #followBtn><button type="button"  class="btn btn-primary btn-sm" style="background-color:grey;" (click)="unfollowUser(article?.author.username)">UnFollow {{article?.author.username}}</button></ng-template>
           <ng-template #unfollowBtn> <button type="button"  class="btn btn-primary btn-sm" style="background-color:RoyalBlue;" (click)="followUser(article?.author.username)"> Follow {{article?.author.username}}</button></ng-template>
           &nbsp;
-          <button type="button" icon="fa fa-heart-o" class="btn btn-primary favorite btn-sm" [ngClass]="{'btnfavorited':article?.favorited}" (click)="favouriteArticle(article?.slug)"> <i class="fa fa-heart-o">Favourite</i></button>
+          <button type="button" icon="fa fa-heart-o" class="btn btn-primary favorite btn-sm" [ngClass]="{'btnfavorited':article?.favorited}" (click)="favouriteArticle(article?.slug, article?.favorited)"> <i class="fa fa-heart-o">Favourite</i></button>
         </div>
       </div>
     <br>
